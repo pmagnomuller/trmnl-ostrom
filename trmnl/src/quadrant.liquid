@@ -1,0 +1,13 @@
+<div class="layout layout--col gap--small">
+  <span class="label">{{ area }} {{ current.slot_label }}</span>
+  <span class="value value--large" data-fit-value="true">{{ current.price_label }}</span>
+  <span class="description">EUR/kWh</span>
+  {% if cheapest_next %}
+    <span class="label">Cheap {{ cheapest_next.label }}</span>
+  {% endif %}
+</div>
+
+<div class="title_bar">
+  <span class="title">Ostrom</span>
+  <span class="instance">{{ updated_label }}</span>
+</div>

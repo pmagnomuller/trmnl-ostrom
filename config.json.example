@@ -1,0 +1,7 @@
+{
+  "OSTROM_CLIENT_ID": "your_ostrom_client_id",
+  "OSTROM_CLIENT_SECRET": "your_ostrom_client_secret",
+  "OSTROM_ZIP": "10115",
+  "OSTROM_ENV": "production",
+  "TRMNL_PLUGIN_UUID": ""
+}

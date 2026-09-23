@@ -1,0 +1,37 @@
+name: TRMNL Ostrom DE prices
+
+on:
+  schedule:
+    # Refresh current slot / cheap window every 15 minutes.
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Push day-ahead prices to TRMNL
+        env:
+          OSTROM_CLIENT_ID: ${{ secrets.OSTROM_CLIENT_ID }}
+          OSTROM_CLIENT_SECRET: ${{ secrets.OSTROM_CLIENT_SECRET }}
+          OSTROM_ZIP: ${{ secrets.OSTROM_ZIP }}
+          OSTROM_ENV: production
+          TRMNL_PLUGIN_UUID: ${{ secrets.TRMNL_PLUGIN_UUID }}
+        run: |
+          if [ -z "${OSTROM_CLIENT_ID}" ] || [ -z "${OSTROM_CLIENT_SECRET}" ]; then
+            echo "OSTROM_CLIENT_ID / OSTROM_CLIENT_SECRET secrets are not set" >&2
+            exit 1
+          fi
+          if [ -z "${TRMNL_PLUGIN_UUID}" ]; then
+            echo "TRMNL_PLUGIN_UUID secret is not set" >&2
+            exit 1
+          fi
+          bash run.sh trmnl --push
